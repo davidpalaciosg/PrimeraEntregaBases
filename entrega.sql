@@ -32,7 +32,7 @@ grant select on boats to jcarreno;
 create table reserves(
     sid number(10,0) not null,
     bid number(10,0) not null,
-    day date unique not null,
+    day date not null,
     price numeric default 0 check(price>=0) not null,
     primary key (sid,bid,day),
     foreign key (sid) references sailors(sid),
@@ -58,34 +58,71 @@ insert into boats(bname, color) values ('La Maravilla','ROJO');
 
 
 --RESERVES
-insert into reserves (sid,bid,day,price) values (1,1,to_date('2021-01-08','yyyy-mm-dd'),254796);
-insert into reserves (sid,bid,day,price) values (1,2,to_date('2021-02-09','yyyy-mm-dd'),353215);
-insert into reserves (sid,bid,day,price) values (1,3,to_date('2021-03-10','yyyy-mm-dd'),479654);
-insert into reserves (sid,bid,day,price) values (1,4,to_date('2021-04-11','yyyy-mm-dd'),235432);
-insert into reserves (sid,bid,day,price) values (2,1,to_date('2021-05-12','yyyy-mm-dd'),154845);
-insert into reserves (sid,bid,day,price) values (2,2,to_date('2021-06-13','yyyy-mm-dd'),354874);
-insert into reserves (sid,bid,day,price) values (2,3,to_date('2021-07-14','yyyy-mm-dd'),313548);
-insert into reserves (sid,bid,day,price) values (2,4,to_date('2021-08-15','yyyy-mm-dd'),231354);
-insert into reserves (sid,bid,day,price) values (3,1,to_date('2021-07-16','yyyy-mm-dd'),148796);
-insert into reserves (sid,bid,day,price) values (3,2,to_date('2021-06-17','yyyy-mm-dd'),132458);
-insert into reserves (sid,bid,day,price) values (3,3,to_date('2021-05-18','yyyy-mm-dd'),146987);
-insert into reserves (sid,bid,day,price) values (3,4,to_date('2021-04-19','yyyy-mm-dd'),214789);
-insert into reserves (sid,bid,day,price) values (4,1,to_date('2021-03-20','yyyy-mm-dd'),369847);
-insert into reserves (sid,bid,day,price) values (4,2,to_date('2021-02-21','yyyy-mm-dd'),784965);
-insert into reserves (sid,bid,day,price) values (5,1,to_date('2021-01-22','yyyy-mm-dd'),632478);
-insert into reserves (sid,bid,day,price) values (5,2,to_date('2020-12-31','yyyy-mm-dd'),854796);
-insert into reserves (sid,bid,day,price) values (5,3,to_date('2020-12-01','yyyy-mm-dd'),147369);
-insert into reserves (sid,bid,day,price) values (5,4,to_date('2020-11-02','yyyy-mm-dd'),789123);
-insert into reserves (sid,bid,day,price) values (1,1,to_date('2020-10-03','yyyy-mm-dd'),159357);
-insert into reserves (sid,bid,day,price) values (1,2,to_date('2020-09-04','yyyy-mm-dd'),852147);
-insert into reserves (sid,bid,day,price) values (2,1,to_date('2020-08-05','yyyy-mm-dd'),963258);
-insert into reserves (sid,bid,day,price) values (3,3,to_date('2020-07-06','yyyy-mm-dd'),789652);
-insert into reserves (sid,bid,day,price) values (3,4,to_date('2020-06-07','yyyy-mm-dd'),745632);
-insert into reserves (sid,bid,day,price) values (4,2,to_date('2020-05-08','yyyy-mm-dd'),985412);
-insert into reserves (sid,bid,day,price) values (5,3,to_date('2020-04-09','yyyy-mm-dd'),789321);
-insert into reserves (sid,bid,day,price) values (6,1,to_date('2020-05-10','yyyy-mm-dd'),123987);
+insert into reserves (sid,bid,day,price) values (1,1,to_date('2021-01-08','YYYY-mm-dd'),254796);
+insert into reserves (sid,bid,day,price) values (1,2,to_date('2021-02-09','YYYY-mm-dd'),353215);
+insert into reserves (sid,bid,day,price) values (1,3,to_date('2021-03-10','YYYY-mm-dd'),479654);
+insert into reserves (sid,bid,day,price) values (1,4,to_date('2021-04-11','YYYY-mm-dd'),235432);
+insert into reserves (sid,bid,day,price) values (2,1,to_date('2021-05-12','YYYY-mm-dd'),154845);
+insert into reserves (sid,bid,day,price) values (2,2,to_date('2021-06-13','YYYY-mm-dd'),354874);
+insert into reserves (sid,bid,day,price) values (2,3,to_date('2021-07-14','YYYY-mm-dd'),313548);
+insert into reserves (sid,bid,day,price) values (2,4,to_date('2021-08-15','YYYY-mm-dd'),231354);
+insert into reserves (sid,bid,day,price) values (3,1,to_date('2021-07-16','YYYY-mm-dd'),148796);
+insert into reserves (sid,bid,day,price) values (3,2,to_date('2021-06-17','YYYY-mm-dd'),132458);
+insert into reserves (sid,bid,day,price) values (3,3,to_date('2021-05-18','YYYY-mm-dd'),146987);
+insert into reserves (sid,bid,day,price) values (3,4,to_date('2021-04-19','YYYY-mm-dd'),214789);
+insert into reserves (sid,bid,day,price) values (4,1,to_date('2021-03-20','YYYY-mm-dd'),369847);
+insert into reserves (sid,bid,day,price) values (4,2,to_date('2021-02-21','YYYY-mm-dd'),784965);
+insert into reserves (sid,bid,day,price) values (5,1,to_date('2021-01-22','YYYY-mm-dd'),632478);
+insert into reserves (sid,bid,day,price) values (5,2,to_date('2020-12-31','YYYY-mm-dd'),854796);
+insert into reserves (sid,bid,day,price) values (5,3,to_date('2020-12-01','YYYY-mm-dd'),147369);
+insert into reserves (sid,bid,day,price) values (5,4,to_date('2020-11-02','YYYY-mm-dd'),789123);
+insert into reserves (sid,bid,day,price) values (1,1,to_date('2020-10-03','YYYY-mm-dd'),159357);
+insert into reserves (sid,bid,day,price) values (1,2,to_date('2020-09-04','YYYY-mm-dd'),852147);
+insert into reserves (sid,bid,day,price) values (2,1,to_date('2020-08-05','YYYY-mm-dd'),963258);
+insert into reserves (sid,bid,day,price) values (3,3,to_date('2020-07-06','YYYY-mm-dd'),789652);
+insert into reserves (sid,bid,day,price) values (3,4,to_date('2020-06-07','YYYY-mm-dd'),745632);
+insert into reserves (sid,bid,day,price) values (4,2,to_date('2020-05-08','YYYY-mm-dd'),985412);
+insert into reserves (sid,bid,day,price) values (5,3,to_date('2020-04-09','YYYY-mm-dd'),789321);
+insert into reserves (sid,bid,day,price) values (5,1,to_date('2020-05-10','YYYY-mm-dd'),123987);
+
+--VIEWS
 
 
 
+--CONSULTAS
+/*
+1. Produzca un listado que contenga nombre y el 
+sid del marinero, nombre del bote, fecha y valor de la reserva,
+ordenado por nombre del marinero y nombre del bote
+*/
 
+select s.sid SID, s.sname NOMBREMARINERO, b.bname NOMBREBARCO, r.day FECHA, r.price PRECIO
+from reserves r
+inner join sailors s on (r.sid = s.sid)
+inner join boats b on (r.bid = b.bid)
+order by s.sname , b.bname;
 
+/*
+2. ¿Cuántas reservas tiene cada marinero? Liste el nombre, cantidad total de reservas. 
+Los marineros que no tengan reservas deben aparecer en el 
+resultado con 0 en la cantidad.
+*/
+
+select s.sname Nombre, count(r.bid) Reservas
+from reserves r
+right join sailors s on(s.sid = r.sid)
+group by s.sname
+order by Reservas desc;
+
+/*
+3. ¿Qué valor total de reservas tiene cada bote por año, mes? 
+Liste nombre del bote, año, mes y valor total de
+reservas.
+*/
+select b.bname NOMBREBARCO, extract(year from to_date(r.day, 'dd-mm-yyyy')) as ANIO, 
+                extract(month from to_date(r.day, 'dd-mm-yyyy')) as MES,
+                sum(r.price) Total
+from reserves r
+inner join boats b on(r.bid = b.bid)
+group by (b.bname, extract(year from to_date(r.day, 'dd-mm-yyyy')), extract(month from to_date(r.day, 'dd-mm-yyyy')))
+order by b.bname, ANIO desc, MES;
