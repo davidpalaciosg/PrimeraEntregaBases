@@ -85,6 +85,7 @@ insert into reserves (sid,bid,day,price) values (3,4,to_date('2020-06-07','YYYY-
 insert into reserves (sid,bid,day,price) values (4,2,to_date('2020-05-08','YYYY-mm-dd'),985412);
 insert into reserves (sid,bid,day,price) values (5,3,to_date('2020-04-09','YYYY-mm-dd'),789321);
 insert into reserves (sid,bid,day,price) values (5,1,to_date('2020-05-10','YYYY-mm-dd'),123987);
+insert into reserves (sid,bid,day,price) values (2,3,to_date('2020-06-11','YYYY-mm-dd'),746321);
 
 --VIEWS
 /*
