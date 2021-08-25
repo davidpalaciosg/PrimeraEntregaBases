@@ -86,9 +86,50 @@ insert into reserves (sid,bid,day,price) values (5,3,to_date('2020-04-09','YYYY-
 insert into reserves (sid,bid,day,price) values (5,1,to_date('2020-05-10','YYYY-mm-dd'),123987);
 
 --VIEWS
+/*
+1. ¿Cuál es el valor total de reservas por año? La vista debe tener el año y el valor total de reservas (price).
+o Utilice la opción EXTRACT(year from fecha) para extraer el año
+o Asegúrese que en el resultado aparezcan filas de diferentes años
+*/
 
+create or replace view v_totalreservasxanio(anio,total) as
+(
+        select extract(year from to_date(r.day, 'dd-mm-yyyy')), sum(r.price)
+        from reserves r
+        group by extract(year from to_date(r.day, 'dd-mm-yyyy'))
+);
 
+  
+/*
+2. ¿Cuál es el valor total de las reservas de un año, 
+mes para los marineros hombres? La vista debe tener las
+columnas año, mes, valor total reservas
+*/
 
+create or replace view v_reservashombres(anio,mes,total) as
+( select extract(year from to_date(r.day, 'dd-mm-yyyy')) ANIO, 
+                extract(month from to_date(r.day, 'dd-mm-yyyy')) MES,
+                sum(r.price) Total
+                from reserves r
+                inner join sailors s on(s.sid = r.sid)
+                where s.gender = 'M'
+                group by (extract(year from to_date(r.day, 'dd-mm-yyyy')), extract(month from to_date(r.day, 'dd-mm-yyyy')))
+);
+
+/*
+3. ¿Cuál es el valor total de las reservas de un año, 
+mes para los marineros mujeres? La vista debe tener las
+columnas año, mes, valor total reservas
+*/
+create or replace view v_reservasmujeres(anio,mes,total) as
+( select extract(year from to_date(r.day, 'dd-mm-yyyy')) ANIO, 
+                extract(month from to_date(r.day, 'dd-mm-yyyy')) MES,
+                sum(r.price) Total
+                from reserves r
+                inner join sailors s on(s.sid = r.sid)
+                where s.gender = 'F'
+                group by (extract(year from to_date(r.day, 'dd-mm-yyyy')), extract(month from to_date(r.day, 'dd-mm-yyyy')))
+);
 --CONSULTAS
 /*
 1. Produzca un listado que contenga nombre y el 
@@ -126,3 +167,4 @@ from reserves r
 inner join boats b on(r.bid = b.bid)
 group by (b.bname, extract(year from to_date(r.day, 'dd-mm-yyyy')), extract(month from to_date(r.day, 'dd-mm-yyyy')))
 order by b.bname, ANIO desc, MES;
+
