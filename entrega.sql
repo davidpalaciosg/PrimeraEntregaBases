@@ -2,6 +2,7 @@
 Primera Entrega: Bases de datos
 Grupo: 4
 Nombres: David Palacios, SebastiÃ¡n Vergara, Nicolas Sanchez, Maria Camila Paternina, Paula Penuela
+Cuentas: 
 */
 
 --CREACIÓN DE TABLAS
@@ -168,3 +169,21 @@ inner join boats b on(r.bid = b.bid)
 group by (b.bname, extract(year from to_date(r.day, 'dd-mm-yyyy')), extract(month from to_date(r.day, 'dd-mm-yyyy')))
 order by b.bname, ANIO desc, MES;
 
+
+/*
+4. ¿Cuál es el valor total de reservas por año? Liste el año y el valor total de reservas. 
+En una última fila debe
+aparecer el valor total de todas las reservas, esto es, la suma de reservas de todos los años.
+a. Utilice la vista creada anteriormente
+
+*/
+select anio, total from v_totalreservasxanio
+union
+select 9999, sum(total) from v_totalreservasxanio;
+;
+
+/*
+5. ¿Qué marinero ha tenido reservas en todos los botes que ha 
+reservado? Liste el nombre.
+a. Asegúrese que en el resultado aparezcan filas
+*/
