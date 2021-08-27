@@ -160,6 +160,7 @@ insert into reserves (sid,bid,day,price) values (2,5,to_date('2015-06-21','YYYY-
 insert into reserves (sid,bid,day,price) values (3,1,to_date('2015-05-22','YYYY-mm-dd'),858321);
 insert into reserves (sid,bid,day,price) values (3,2,to_date('2015-02-23','YYYY-mm-dd'),859321);
 }
+commit;
 --VIEWS
 /*
 1. ¿Cuál es el valor total de reservas por año? La vista debe tener el año y el valor total de reservas (price).
