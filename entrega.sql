@@ -213,7 +213,7 @@ sid del marinero, nombre del bote, fecha y valor de la reserva,
 ordenado por nombre del marinero y nombre del bote
 */
 
-select s.sid SID, s.sname NOMBREMARINERO, b.bname NOMBREBARCO, r.day FECHA, r.price PRECIO
+select s.sid SID, s.sname NOMBREMARINERO, b.bname NOMBREBOTE, r.day FECHA, r.price PRECIO
 from reserves r
 inner join sailors s on (r.sid = s.sid)
 inner join boats b on (r.bid = b.bid)
@@ -329,6 +329,7 @@ where v2.promedioMarinero > v1.promedioGeneral
 order by v2.nombre, v2.anio desc;
 
 /*
+7.
 Produzca la siguiente tabla que muestra el valor total de las reservas por 
 año y mes para los mariners mujeres y hombres:
 a. Use las vistas creadas anteriormente
@@ -372,13 +373,17 @@ select v3.anio,v3.mes,nvl(sum(v1.total),0)
 select v1.anio, v1.mes, v1.Mujeres, v2.Hombres, v1.Mujeres+v2.Hombres Total
 from v_reservasAnioMesMujeres v1
 inner join v_reservasAnioMesHombres v2 on (v1.anio=v2.anio and v1.mes = v2.mes)
-order by v1.anio desc, v1.mes;
-/*
-union
-select '0','0',
-    (select sum(v1.Mujeres) from v_reservasAnioMesMujeres v1),
-    (select sum(v2.Hombres) from v_reservasAnioMesHombres v2),
-    '0'
+union 
+
+select 9999 Anio,9999 Mes,
+    (select sum(v1.Mujeres) from v_reservasAnioMesMujeres v1) TMujeres,
+    (select sum(v2.Hombres) from v_reservasAnioMesHombres v2)THombres,
+    (
+        select sum(v1.Mujeres+v2.Hombres) Total
+        from v_reservasAnioMesMujeres v1
+        inner join v_reservasAnioMesHombres v2 on (v1.anio=v2.anio and v1.mes = v2.mes)
+        
+    ) Total
 from dual;
-*/
+
 
