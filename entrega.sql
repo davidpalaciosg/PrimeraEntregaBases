@@ -343,18 +343,42 @@ Año Mes mujeres hombres Total
 ….
 Totales 7 4 11
 */
-/*
-select * from v_reservashombres
-order by v_reservashombres.anio desc, v_reservashombres.mes;
-select * from v_reservasmujeres
-order by v_reservasmujeres.anio desc, v_reservasmujeres.mes;
-*/
+--Vista que busca todos los meses y años de las reservas
+create or replace view v_fechasReserva(anio, mes) as
+(
+    select  extract(year from to_date(r.day, 'dd-mm-yyyy')) as Anio, --AÑO
+            extract(month from to_date(r.day, 'dd-mm-yyyy')) as Mes --MES      
+    from reserves r
+    group by extract(year from to_date(r.day, 'dd-mm-yyyy')),extract(month from to_date(r.day, 'dd-mm-yyyy'))
+);
 
-select v1.anio, v1.mes, sum(v1.total)
-from v_reservashombres v1
-group by v1.anio, v1.mes
+--Vista que guarda el total de reservas por TODOS los año, mes de las mujeres
+create or replace view v_reservasAnioMesMujeres(anio,mes,Mujeres) as
+(
+select v3.anio,v3.mes,nvl(sum(v1.total),0)
+    from v_reservasmujeres v1
+    right join v_fechasReserva v3 on (v1.mes = v3.mes and v1.anio = v3.anio)
+    group by v3.anio, v3.mes
+);
+
+create or replace view v_reservasAnioMesHombres(anio,mes,Hombres) as
+(
+select v3.anio,v3.mes,nvl(sum(v1.total),0)
+    from v_reservashombres v1
+    right join v_fechasReserva v3 on (v1.mes = v3.mes and v1.anio = v3.anio)
+    group by v3.anio, v3.mes
+);
+
+select v1.anio, v1.mes, v1.Mujeres, v2.Hombres, v1.Mujeres+v2.Hombres Total
+from v_reservasAnioMesMujeres v1
+inner join v_reservasAnioMesHombres v2 on (v1.anio=v2.anio and v1.mes = v2.mes)
+order by v1.anio desc, v1.mes;
+/*
 union
-select v2.anio, v2.mes, sum(v2.total)
-from v_reservasmujeres v2
-group by v2.anio, v2.mes
+select '0','0',
+    (select sum(v1.Mujeres) from v_reservasAnioMesMujeres v1),
+    (select sum(v2.Hombres) from v_reservasAnioMesHombres v2),
+    '0'
+from dual;
+*/
 
