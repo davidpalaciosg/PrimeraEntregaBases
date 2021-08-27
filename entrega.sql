@@ -1,8 +1,8 @@
 /*
 Primera Entrega: Bases de datos
 Grupo: 4
-Nombres: David Palacios, SebastiÃ¡n Vergara, Nicolas Sanchez, Maria Camila Paternina, Paula Penuela
-Cuentas: 
+Nombres: David Palacios, Sebastian Vergara, Nicolas Sanchez, Maria Camila Paternina, Paula Penuela
+Cuentas: is562815, is562814,is562812,is562806,is562810
 */
 
 --CREACIÓN DE TABLAS
@@ -123,9 +123,9 @@ insert into reserves (sid,bid,day,price) values (1,3,to_date('2017-09-15','YYYY-
 insert into reserves (sid,bid,day,price) values (2,1,to_date('2017-08-16','YYYY-mm-dd'),821321);
 insert into reserves (sid,bid,day,price) values (1,2,to_date('2017-07-17','YYYY-mm-dd'),822321);
 insert into reserves (sid,bid,day,price) values (2,4,to_date('2017-06-18','YYYY-mm-dd'),823321);
-insert into reserves (sid,bid,day,price) values (1,1,to_date('2017-05-19','YYYY-mm-dd'),824321);
+insert into reserves (sid,bid,day,price) values (1,1,to_date('2017-05-19','YYYY-mm-dd'),231514);
 insert into reserves (sid,bid,day,price) values (3,1,to_date('2017-04-20','YYYY-mm-dd'),825321);
-insert into reserves (sid,bid,day,price) values (4,1,to_date('2017-03-21','YYYY-mm-dd'),826321);
+insert into reserves (sid,bid,day,price) values (4,1,to_date('2017-03-21','YYYY-mm-dd'),145698);
 insert into reserves (sid,bid,day,price) values (5,1,to_date('2017-02-22','YYYY-mm-dd'),827321);
 insert into reserves (sid,bid,day,price) values (1,2,to_date('2017-02-23','YYYY-mm-dd'),828321);
 insert into reserves (sid,bid,day,price) values (2,2,to_date('2017-01-24','YYYY-mm-dd'),829321);
@@ -138,21 +138,21 @@ insert into reserves (sid,bid,day,price) values (3,3,to_date('2016-08-30','YYYY-
 insert into reserves (sid,bid,day,price) values (4,3,to_date('2016-07-31','YYYY-mm-dd'),836321);
 insert into reserves (sid,bid,day,price) values (5,3,to_date('2016-06-01','YYYY-mm-dd'),837321);
 insert into reserves (sid,bid,day,price) values (1,4,to_date('2016-05-02','YYYY-mm-dd'),838321);
-insert into reserves (sid,bid,day,price) values (2,4,to_date('2016-04-03','YYYY-mm-dd'),839321);
+insert into reserves (sid,bid,day,price) values (2,4,to_date('2016-04-03','YYYY-mm-dd'),962147);
 insert into reserves (sid,bid,day,price) values (3,4,to_date('2016-03-04','YYYY-mm-dd'),840321);
 insert into reserves (sid,bid,day,price) values (4,4,to_date('2016-11-05','YYYY-mm-dd'),841321);
-insert into reserves (sid,bid,day,price) values (5,4,to_date('2016-08-06','YYYY-mm-dd'),842321);
+insert into reserves (sid,bid,day,price) values (5,4,to_date('2016-08-06','YYYY-mm-dd'),784512);
 insert into reserves (sid,bid,day,price) values (1,5,to_date('2016-02-07','YYYY-mm-dd'),843321);
 insert into reserves (sid,bid,day,price) values (2,5,to_date('2016-01-08','YYYY-mm-dd'),844321);
-insert into reserves (sid,bid,day,price) values (3,5,to_date('2016-01-09','YYYY-mm-dd'),845321);
+insert into reserves (sid,bid,day,price) values (3,5,to_date('2016-01-09','YYYY-mm-dd'),413024);
 insert into reserves (sid,bid,day,price) values (4,5,to_date('2015-12-10','YYYY-mm-dd'),846321);
 insert into reserves (sid,bid,day,price) values (5,5,to_date('2015-12-11','YYYY-mm-dd'),847321);
 insert into reserves (sid,bid,day,price) values (1,1,to_date('2015-11-12','YYYY-mm-dd'),848321);
 insert into reserves (sid,bid,day,price) values (1,2,to_date('2015-11-13','YYYY-mm-dd'),849321);
 insert into reserves (sid,bid,day,price) values (1,3,to_date('2015-10-14','YYYY-mm-dd'),850321);
-insert into reserves (sid,bid,day,price) values (1,4,to_date('2015-10-15','YYYY-mm-dd'),851321);
+insert into reserves (sid,bid,day,price) values (1,4,to_date('2015-10-15','YYYY-mm-dd'),697410);
 insert into reserves (sid,bid,day,price) values (1,5,to_date('2015-09-16','YYYY-mm-dd'),852321);
-insert into reserves (sid,bid,day,price) values (2,1,to_date('2015-09-17','YYYY-mm-dd'),853321);
+insert into reserves (sid,bid,day,price) values (2,1,to_date('2015-09-17','YYYY-mm-dd'),23547);
 insert into reserves (sid,bid,day,price) values (2,2,to_date('2015-08-18','YYYY-mm-dd'),854321);
 insert into reserves (sid,bid,day,price) values (2,3,to_date('2015-07-19','YYYY-mm-dd'),855321);
 insert into reserves (sid,bid,day,price) values (2,4,to_date('2015-06-20','YYYY-mm-dd'),856321);
@@ -260,3 +260,100 @@ select 9999, sum(total) from v_totalreservasxanio;
 5. ¿Qué marinero ha tenido reservas en todos los botes? Liste el nombre.
 a. Asegurese que en el resultado aparezcan filas
 */
+
+--Crear vista que cuente la cantidad de botes
+create or replace view v_totalBotes(cantidad) as
+(
+    select sum(count(distinct b.bid))
+    from boats b
+    group by b.bid
+);
+
+--Vista que cuenta en cuántos botes ha estado cada marinero
+create or replace view v_botesXMarinero(nombre, sid,cantidad) as
+(
+    select  s.sname, s.sid, count(distinct b.bid)
+    from boats b
+    inner join reserves r on(r.bid = b.bid)
+    right join sailors s on (r.sid = s.sid)
+    group by s.sname,s.sid
+);
+
+--Comparar vistas
+select v2.nombre, v1.cantidad
+from v_totalBotes v1
+inner join v_botesXMarinero v2 on (v1.cantidad=v2.cantidad);
+
+/*
+6. ¿Cuáles son los marineros que tienen un promedio de reservas por año mayor al 
+promedio de reservas general por año? 
+Liste el nombre del marinero, el año, el promedio general del año y el promedio del marinero en cada
+año.
+*/
+
+--Vista que calcula la cantidad de botes por año
+create or replace view v_cantidadBotesXAnio(anio, cantidad) as
+(
+    select extract(year from to_date(r.day, 'dd-mm-yyyy')), --AÑO
+        count(r.bid)
+        from reserves r
+        group by  extract(year from to_date(r.day, 'dd-mm-yyyy'))
+        
+);
+--Vista que calcula el promedio general gastado por año
+create or replace view v_promedioXAnio(anio, promedioGeneral) as
+(
+     select extract(year from to_date(r.day, 'dd-mm-yyyy')), --AÑO
+        round(avg(r.price),2)
+        from reserves r
+        group by   extract(year from to_date(r.day, 'dd-mm-yyyy'))
+        
+);
+--Vista que calcula el promedio gastado por cada marinero por año
+create or replace view v_promedioXMarineroXAnio(anio, nombre, promedioMarinero) as
+(
+    select extract(year from to_date(r.day, 'dd-mm-yyyy')),
+           s.sname,
+            round(avg(r.price),2)
+            from sailors s
+            inner join reserves r on(s.sid = r.sid)
+            group by extract(year from to_date(r.day, 'dd-mm-yyyy')),s.sname
+);
+
+--Comparar vistas
+select v2.nombre, v2.anio, v1.promedioGeneral, v2.promedioMarinero
+from v_promedioXAnio v1
+inner join v_promedioXMarineroXAnio v2 on (v1.anio = v2.anio)
+where v2.promedioMarinero > v1.promedioGeneral
+order by v2.nombre, v2.anio desc;
+
+/*
+Produzca la siguiente tabla que muestra el valor total de las reservas por 
+año y mes para los mariners mujeres y hombres:
+a. Use las vistas creadas anteriormente
+3
+b. La última fila tiene los totales de las columnas
+c. La última columna tiene los totales por fila
+Año Mes mujeres hombres Total
+2018 11 3 2 5
+2018 12 4 2 6
+2019 01 … … ..
+…..
+….
+Totales 7 4 11
+*/
+/*
+select * from v_reservashombres
+order by v_reservashombres.anio desc, v_reservashombres.mes;
+select * from v_reservasmujeres
+order by v_reservasmujeres.anio desc, v_reservasmujeres.mes;
+*/
+
+select v1.anio, v1.mes, sum(v1.total)
+from v_reservashombres v1
+group by v1.anio, v1.mes
+union
+select v2.anio, v2.mes, sum(v2.total)
+from v_reservasmujeres v2
+group by v2.anio, v2.mes
+
