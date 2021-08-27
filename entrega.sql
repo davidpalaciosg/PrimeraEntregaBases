@@ -258,5 +258,5 @@ select 9999, sum(total) from v_totalreservasxanio;
 
 /*
 5. ¿Qué marinero ha tenido reservas en todos los botes? Liste el nombre.
-a. Asegúrese que en el resultado aparezcan filas
+a. Asegurese que en el resultado aparezcan filas
 */
